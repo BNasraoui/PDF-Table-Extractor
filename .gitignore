@@ -1,0 +1,51 @@
+# Python virtual environments
+venv/
+env/
+ENV/
+build_env/
+
+# Python byte-compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+*.egg
+
+# PyInstaller build files
+*.manifest
+*.spec
+
+# Application build artifacts
+PDF Table Extractor.app/
+PDF_Table_Extractor.zip
+
+# Logs
+*.log
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Environment variables
+.env
+.env.*
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# PDF test files (optional, uncomment if you don't want to include sample PDFs)
+# *.pdf 
