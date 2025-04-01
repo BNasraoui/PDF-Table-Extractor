@@ -32,10 +32,10 @@ jobs:
 
       - name: Build macOS app
         run: |
-          # Fix Tree import in spec file
-          sed -i '' 's/a.datas += Tree/from PyInstaller.utils.hooks import collect_data_files\na.datas += collect_data_files/' app.spec
+          # Clean previous builds
+          rm -rf build dist *.py[cod] __pycache__ tk_fix.py
           
-          # Build app
+          # Build app with spec file
           pyinstaller app.spec
           
           # Make app executable

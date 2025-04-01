@@ -2,6 +2,10 @@
 
 block_cipher = None
 
+# Create runtime hook to fix Tkinter menu bar crash on macOS
+with open('tk_fix.py', 'w') as f:
+    f.write('import os\nos.environ["_PYTHON_HOST_COMPLETE"] = "disable-tk-menu"\n')
+
 a = Analysis(
     ['pdf_table_extractor.py'],
     pathex=[],
@@ -10,7 +14,7 @@ a = Analysis(
     hiddenimports=['PIL', 'PIL._imagingtk', 'PIL._tkinter_finder', 'pdfplumber.utils'],
     hookspath=[],
     hooksconfig={},
-    runtime_hooks=[],
+    runtime_hooks=['tk_fix.py'],
     excludes=[],
     win_no_prefer_redirects=False,
     win_private_assemblies=False,
@@ -18,7 +22,7 @@ a = Analysis(
     noarchive=False,
 )
 
-# Add customtkinter files
+# Add customtkinter files - fixed approach
 import os
 import sys
 import site
@@ -27,7 +31,14 @@ from pathlib import Path
 
 # Find customtkinter path
 ctk_path = Path(customtkinter.__file__).parent
-a.datas += Tree(ctk_path, prefix='customtkinter')
+
+# Add each file individually
+for root, dirs, files in os.walk(str(ctk_path)):
+    for file in files:
+        full_path = os.path.join(root, file)
+        rel_path = os.path.relpath(full_path, str(ctk_path))
+        dest_path = os.path.join('customtkinter', rel_path)
+        a.datas.append((dest_path, full_path, 'DATA'))
 
 pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 
