@@ -19,7 +19,6 @@ build/
 
 # PyInstaller build files
 *.manifest
-*.spec
 
 # Application build artifacts
 PDF Table Extractor.app/
